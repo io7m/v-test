@@ -10,7 +10,7 @@ pipeline {
         stage('x') {
           agent { label 'blender' }
           steps {
-            sh 'env'
+            sh 'env | sort'
           }
         }
       }
