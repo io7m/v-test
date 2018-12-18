@@ -9,9 +9,6 @@ pipeline {
       parallel {
         stage('x') {
           agent { label 'blender' }
-          tools {
-
-          }
           steps {
             sh 'echo hello'
           }
