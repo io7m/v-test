@@ -15,7 +15,7 @@ node {
       node(nodeName) {
         stage(nodeName) {
           sh 'env | sort'
-          sh './work.sh'
+          sh '${WORKSPACE}/work.sh'
         }
       }
     }
