@@ -13,7 +13,7 @@ node {
     nodeTasks[nodeName] = {
       node(nodeName) {
         stage(nodeName) {
-          checkout()
+          checkout scm
           sh 'env | sort'
         }
       }
