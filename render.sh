@@ -33,8 +33,13 @@ fi
 info "node index ${NODE_INDEX}"
 info "node count ${NODE_COUNT}"
 
+if [ -z "${WORKSPACE}" ]
+then
+  WORKSPACE=.
+fi
+
 TIME_START=$(date "+%Y-%m-%dT%H:%M:%S")
-OUTPUT="renders/"
+OUTPUT="${WORKSPACE}/renders/"
 LOG_FILE="${OUTPUT}/"$(date "+%Y%m%dT%H%M%S.log")
 mkdir -p "${OUTPUT}" || exit 1
 
@@ -69,4 +74,10 @@ EOF
 ) | tee -a "${LOG_FILE}"
 
 echo "Time: ${DIFF}"
+
+RENDER_TARGET="jenkins-renders@mustard.int.arc7.info:/shared/jenkins-renders/${JOB_BASE_NAME}/${BUILD_ID}/"
+
+echo rsync -avz --progress \
+  "${WORKSPACE}/renders" \
+  "${RENDER_TARGET}"
 
