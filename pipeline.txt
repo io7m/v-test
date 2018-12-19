@@ -6,7 +6,14 @@ node {
   def nodes = nodesByLabel label:"blender"
   def nodesSorted = nodes.sort().toList()
   for (int i = 0; i < nodesSorted.size(); ++i) {
-    echo "Nodes: ${nodesSorted[i]}"
+    def node = nodesSorted[i]
+    stage(node) {
+      node(node) {
+        script {
+          echo "RUNNING!"
+        }
+      }
+    }
   }
 }
 
