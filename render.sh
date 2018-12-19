@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+FRAME_COUNT=120
+RENDER_HOST="jenkins-renders@mustard.int.arc7.info"
+RENDER_BASE_DIRECTORY="/shared/jenkins-renders/"
+
 set -o pipefail
 
 fatal()
@@ -69,10 +73,10 @@ time blender \
   --background \
   master.blend \
   --scene Scene \
-  --render-output "${OUTPUT}/" \
+  --render-output "${OUTPUT}/########.png" \
   --render-format PNG \
   --frame-start "${NODE_INDEX}" \
-  --frame-end 120 \
+  --frame-end "${FRAME_COUNT}" \
   --frame-jump "${NODE_COUNT}" \
   --render-anim 2>&1 | tee -a "${LOG_FILE}" || fatal "Blender failed!"
 
@@ -85,8 +89,7 @@ EOF
 
 echo "Time: ${DIFF}"
 
-RENDER_HOST="jenkins-renders@mustard.int.arc7.info"
-RENDER_DIRECTORY="/shared/jenkins-renders/${JOB_BASE_NAME}/${BUILD_ID}/"
+RENDER_DIRECTORY="${RENDER_BASE_DIRECTORY}/${JOB_BASE_NAME}/${BUILD_ID}/"
 RENDER_TARGET="${RENDER_HOST}:${RENDER_DIRECTORY}"
 
 ssh "${RENDER_HOST}" "mkdir -p ${RENDER_DIRECTORY}" || fatal "ssh failed"
