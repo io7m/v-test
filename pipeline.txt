@@ -10,7 +10,7 @@ node {
     stage(node) {
       node(node) {
         script {
-          echo "RUNNING!"
+          sh 'env | sort'
         }
       }
     }
