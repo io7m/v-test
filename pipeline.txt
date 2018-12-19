@@ -15,7 +15,7 @@ node {
       node(nodeName) {
         stage(nodeName) {
           checkout scm
-          sh "./work.sh ${thisNodeIndex} ${nodeCount}"
+          sh "./render.sh ${thisNodeIndex} ${nodeCount}"
         }
       }
     }
