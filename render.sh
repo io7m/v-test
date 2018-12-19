@@ -34,7 +34,7 @@ info "node index ${NODE_INDEX}"
 info "node count ${NODE_COUNT}"
 
 TIME_START=$(date "+%Y-%m-%dT%H:%M:%S")
-OUTPUT="/tmp/"
+OUTPUT="renders/"
 LOG_FILE="${OUTPUT}/"$(date "+%Y%m%dT%H%M%S.log")
 mkdir -p "${OUTPUT}" || exit 1
 
