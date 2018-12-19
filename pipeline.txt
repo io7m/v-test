@@ -15,8 +15,6 @@ node {
       node(nodeName) {
         stage(nodeName) {
           checkout scm
-          echo "I am node ${thisNodeIndex} of ${nodeCount}"
-          sh 'env | sort'
           sh './work.sh'
         }
       }
