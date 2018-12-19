@@ -6,14 +6,15 @@ node {
   def nodes = nodesByLabel label:"blender"
   def nodesSorted = nodes.sort().toList()
   def nodeTasks = [:]
-
-  for (int i = 0; i < nodesSorted.size(); ++i) {
+  def nodeCount = nodesSorted.size()
+  for (int i = 0; i < nodeCount; ++i) {
     def nodeName = nodesSorted[i]
 
     nodeTasks[nodeName] = {
       node(nodeName) {
         stage(nodeName) {
           checkout scm
+          echo 'I am node ${i} of ${nodeCount}'
           sh 'env | sort'
           sh './work.sh'
         }
