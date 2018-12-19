@@ -77,4 +77,4 @@ echo "Time: ${DIFF}"
 
 RENDER_TARGET="jenkins-renders@mustard.int.arc7.info:/shared/jenkins-renders/${JOB_BASE_NAME}/${BUILD_ID}/"
 
-echo rsync -avz --progress "${OUTPUT}/" "${RENDER_TARGET}"
+exec rsync -avz --progress "${OUTPUT}/" "${RENDER_TARGET}"
