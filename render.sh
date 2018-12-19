@@ -36,7 +36,6 @@ info "node count ${NODE_COUNT}"
 TIME_START=$(date "+%Y-%m-%dT%H:%M:%S")
 OUTPUT="renders"
 LOG_FILE="${OUTPUT}/"$(date "+%Y%m%dT%H%M%S.log")
-
 mkdir -p "${OUTPUT}" || exit 1
 
 (
@@ -57,14 +56,10 @@ time blender \
   --frame-jump "${NODE_COUNT}" \
   --render-anim 2>&1 | tee "${LOG_FILE}"
 
-TIME_END=$(date "+%Y-%m-%dT%H:%M:%S")
-DIFF=$(datediff -f '%Hh %Mm %Ss' ${TIME_START} ${TIME_END})
-
 (
 cat <<EOF
 ------------------------------------------------------------------------
 Rendering finished ${TIME_END}
-Rendering took ${DIFF}
 EOF
 ) | tee -a "${LOG_FILE}"
 
