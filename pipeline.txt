@@ -5,22 +5,20 @@
 node {
   def nodes = nodesByLabel label:"blender"
   def nodesSorted = nodes.sort().toList()
-
-  def tasks = [:]
+  def nodeTasks = [:]
 
   for (int i = 0; i < nodesSorted.size(); ++i) {
     def nodeName = nodesSorted[i]
 
-    tasks[nodeName] = {
+    nodeTasks[nodeName] = {
       node(nodeName) {
         stage(nodeName) {
+          checkout()
           sh 'env | sort'
-          sh '${WORKSPACE}/work.sh'
         }
       }
     }
   }
 
-  parallel tasks
+  parallel nodeTasks
 }
-
