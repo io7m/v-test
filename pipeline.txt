@@ -15,7 +15,7 @@ pipeline {
             sh 'env | sort'
 
             script {
-              def nodes = nodesByLabel label:"blender"
+              def nodes = (nodesByLabel label:"blender").sort().toList()
               for (int i = 0; i < nodes.size(); ++i) {
                 echo "Nodes: ${nodes[i]}"
               }
