@@ -14,6 +14,7 @@ node {
     tasks[nodeName] = {
       node(nodeName) {
         stage(nodeName) {
+          sh 'env | sort'
           sh './work.sh'
         }
       }
