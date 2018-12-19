@@ -32,3 +32,10 @@ fi
 
 info "node index ${NODE_INDEX}"
 info "node count ${NODE_COUNT}"
+
+for time in $(seq 1 10)
+do
+  info "${time}"
+  sleep 1
+done
+
