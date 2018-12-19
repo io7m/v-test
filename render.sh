@@ -81,4 +81,4 @@ RENDER_TARGET="${RENDER_HOST}:${RENDER_DIRECTORY}"
 
 ssh "${RENDER_HOST}" "mkdir ${RENDER_DIRECTORY}" || exit 1
 
-exec rsync -avvvz --progress "${OUTPUT}/" "${RENDER_TARGET}"
+exec rsync -avz --progress "${OUTPUT}/" "${RENDER_TARGET}"
