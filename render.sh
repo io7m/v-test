@@ -45,6 +45,7 @@ then
   WORKSPACE=.
 fi
 if [ -z "${BUILD_ID}" ]
+then
   BUILD_ID=0
 fi
 
