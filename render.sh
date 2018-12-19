@@ -48,16 +48,18 @@ Rendering started ${TIME_START}
 EOF
 ) | tee -a "${LOG_FILE}"
 
-time blender \
-  --background \
-  master.blend \
-  --scene Scene \
-  --render-output "${OUTPUT}/" \
-  --render-format PNG \
-  --frame-start "${NODE_INDEX}" \
-  --frame-end 120 \
-  --frame-jump "${NODE_COUNT}" \
-  --render-anim 2>&1 | tee "${LOG_FILE}"
+# time blender \
+#   --background \
+#   master.blend \
+#   --scene Scene \
+#   --render-output "${OUTPUT}/" \
+#   --render-format PNG \
+#   --frame-start "${NODE_INDEX}" \
+#   --frame-end 120 \
+#   --frame-jump "${NODE_COUNT}" \
+#   --render-anim 2>&1 | tee "${LOG_FILE}"
+
+sleep 1
 
 (
 cat <<EOF
@@ -67,3 +69,4 @@ EOF
 ) | tee -a "${LOG_FILE}"
 
 echo "Time: ${DIFF}"
+
