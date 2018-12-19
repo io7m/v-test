@@ -9,7 +9,6 @@ fatal()
 info()
 {
   echo "info: $1" 1>&2
-  exit 1
 }
 
 if [ $# -ne 2 ]
