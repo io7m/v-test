@@ -15,6 +15,7 @@ node {
         stage(nodeName) {
           checkout scm
           sh 'env | sort'
+          sh './work.sh'
         }
       }
     }
