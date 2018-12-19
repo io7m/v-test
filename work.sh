@@ -31,3 +31,5 @@ then
   fatal "node count must be non-empty string"
 fi
 
+info "node index ${NODE_INDEX}"
+info "node count ${NODE_COUNT}"
