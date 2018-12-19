@@ -39,6 +39,9 @@ LOG_FILE="${OUTPUT}/"$(date "+%Y%m%dT%H%M%S.log")
 mkdir -p "${OUTPUT}" || exit 1
 
 (
+env | sort
+echo
+
 cat <<EOF
 Rendering started ${TIME_START}
 ------------------------------------------------------------------------
