@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -o pipefail
+
 fatal()
 {
   echo "fatal: $1" 1>&2
@@ -37,11 +39,15 @@ if [ -z "${WORKSPACE}" ]
 then
   WORKSPACE=.
 fi
+if [ -z "${BUILD_ID}" ]
+  BUILD_ID=0
+fi
 
 TIME_START=$(date "+%Y-%m-%dT%H:%M:%S")
-OUTPUT="${WORKSPACE}/renders/"
+OUTPUT="${WORKSPACE}/renders/${BUILD_ID}/"
 LOG_FILE="${OUTPUT}/"$(date "+%Y%m%dT%H%M%S.log")
-mkdir -p "${OUTPUT}" || exit 1
+
+mkdir -p "${OUTPUT}" || fatal "mkdir failed"
 
 (
 env | sort
@@ -53,18 +59,16 @@ Rendering started ${TIME_START}
 EOF
 ) | tee -a "${LOG_FILE}"
 
-# time blender \
-#   --background \
-#   master.blend \
-#   --scene Scene \
-#   --render-output "${OUTPUT}/" \
-#   --render-format PNG \
-#   --frame-start "${NODE_INDEX}" \
-#   --frame-end 120 \
-#   --frame-jump "${NODE_COUNT}" \
-#   --render-anim 2>&1 | tee "${LOG_FILE}"
-
-sleep 1
+time blender \
+  --background \
+  master.blend \
+  --scene Scene \
+  --render-output "${OUTPUT}/" \
+  --render-format PNG \
+  --frame-start "${NODE_INDEX}" \
+  --frame-end 120 \
+  --frame-jump "${NODE_COUNT}" \
+  --render-anim 2>&1 | tee "${LOG_FILE}" || fatal "Blender failed!"
 
 (
 cat <<EOF
@@ -79,6 +83,6 @@ RENDER_HOST="jenkins-renders@mustard.int.arc7.info"
 RENDER_DIRECTORY="/shared/jenkins-renders/${JOB_BASE_NAME}/${BUILD_ID}/"
 RENDER_TARGET="${RENDER_HOST}:${RENDER_DIRECTORY}"
 
-ssh "${RENDER_HOST}" "mkdir -p ${RENDER_DIRECTORY}" || exit 1
+ssh "${RENDER_HOST}" "mkdir -p ${RENDER_DIRECTORY}" || fatal "ssh failed"
 
 exec rsync -avz --progress "${OUTPUT}/" "${RENDER_TARGET}"
