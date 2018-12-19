@@ -12,8 +12,10 @@ node {
     def nodeName = nodesSorted[i]
 
     tasks[nodeName] = {
-      node label:nodeName {
-
+      node(nodeName) {
+        stage(nodeName) {
+          sh 'env | sort'
+        }
       }
     }
   }
