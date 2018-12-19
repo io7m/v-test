@@ -31,9 +31,14 @@ if [ -z "${NODE_COUNT}" ]
 then
   fatal "node count must be non-empty string"
 fi
+if [ -z "${NODE_NAME}" ]
+then
+  NODE_NAME=$(hostname -s) || fatal "could not get hostname"
+fi
 
 info "node index ${NODE_INDEX}"
 info "node count ${NODE_COUNT}"
+info "node name  ${NODE_NAME}"
 
 if [ -z "${WORKSPACE}" ]
 then
@@ -45,7 +50,7 @@ fi
 
 TIME_START=$(date "+%Y-%m-%dT%H:%M:%S")
 OUTPUT="${WORKSPACE}/renders/${BUILD_ID}/"
-LOG_FILE="${OUTPUT}/"$(date "+%Y%m%dT%H%M%S.log")
+LOG_FILE="${OUTPUT}/${NODE_NAME}-"$(date "+%Y%m%dT%H%M%S.log")
 
 mkdir -p "${OUTPUT}" || fatal "mkdir failed"
 
