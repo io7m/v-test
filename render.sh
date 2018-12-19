@@ -74,7 +74,7 @@ time blender \
   --frame-start "${NODE_INDEX}" \
   --frame-end 120 \
   --frame-jump "${NODE_COUNT}" \
-  --render-anim 2>&1 | tee "${LOG_FILE}" || fatal "Blender failed!"
+  --render-anim 2>&1 | tee -a "${LOG_FILE}" || fatal "Blender failed!"
 
 (
 cat <<EOF
