@@ -33,9 +33,39 @@ fi
 info "node index ${NODE_INDEX}"
 info "node count ${NODE_COUNT}"
 
-for time in $(seq 1 10)
-do
-  info "${time}"
-  sleep 1
-done
+TIME_START=`date "+%Y-%m-%dT%H:%M:%S"`
+OUTPUT="renders"
+LOG_FILE="${OUTPUT}/"`date "+%Y%m%dT%H%M%S.log"`
 
+mkdir -p "${OUTPUT}" || exit 1
+
+(
+cat <<EOF
+Rendering chemriver started ${TIME_START}
+------------------------------------------------------------------------
+EOF
+) | tee -a "${LOG_FILE}"
+
+time blender \
+  --background \
+  master.blend \
+  --scene Scene \
+  --render-output "${OUTPUT}" \
+  --render-format PNG \
+  --frame-start "${NODE_INDEX}" \
+  --frame-end 120 \
+  --frame-jump "${NODE_COUNT}" \
+  --render-anim 2>&1 | tee "${LOG_FILE}"
+
+TIME_END=`date "+%Y-%m-%dT%H:%M:%S"`
+DIFF=`datediff -f '%Hh %Mm %Ss' ${TIME_START} ${TIME_END}`
+
+(
+cat <<EOF
+------------------------------------------------------------------------
+Rendering finished ${TIME_END}
+Rendering took ${DIFF}
+EOF
+) | tee -a "${LOG_FILE}"
+
+echo "Time: ${DIFF}"
