@@ -1,5 +1,7 @@
 #!groovy
 
+// Required: https://plugins.jenkins.io/pipeline-utility-steps
+
 pipeline {
 
   agent none
@@ -11,6 +13,13 @@ pipeline {
           agent { label 'blender' }
           steps {
             sh 'env | sort'
+
+            script {
+              def nodes = nodesByLabel label:"blender"
+              for (int i = 0; i < nodes.size(); ++i) {
+                echo "Nodes: ${nodes[i]}"
+              }
+            }
           }
         }
       }
