@@ -75,6 +75,10 @@ EOF
 
 echo "Time: ${DIFF}"
 
-RENDER_TARGET="jenkins-renders@mustard.int.arc7.info:/shared/jenkins-renders/${JOB_BASE_NAME}/${BUILD_ID}/"
+RENDER_HOST="jenkins-renders@mustard.int.arc7.info"
+RENDER_DIRECTORY="/shared/jenkins-renders/${JOB_BASE_NAME}/${BUILD_ID}/"
+RENDER_TARGET="${RENDER_HOST}:${RENDER_DIRECTORY}"
+
+ssh "${RENDER_HOST}" "mkdir ${RENDER_DIRECTORY}" || exit 1
 
 exec rsync -avvvz --progress "${OUTPUT}/" "${RENDER_TARGET}"
