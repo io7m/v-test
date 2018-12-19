@@ -9,10 +9,10 @@ node {
   def tasks = [:]
 
   for (int i = 0; i < nodesSorted.size(); ++i) {
-    def node = nodesSorted[i]
+    def nodeName = nodesSorted[i]
 
-    tasks[node] = {
-      node(node) {
+    tasks[nodeName] = {
+      node label:nodeName {
 
       }
     }
